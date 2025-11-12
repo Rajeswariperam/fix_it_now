@@ -1,0 +1,161 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { TextField, Button, Card, CardContent, Select, MenuItem, FormControl, InputLabel, Typography, Box, Container, Alert } from "@mui/material";
+import { motion } from "framer-motion";
+import { LockOutlined } from "@mui/icons-material";
+
+function Login() {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        role: "",
+    });
+
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post("http://localhost:3000/api/auth/login", formData);
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("role", res.data.user.role);
+            localStorage.setItem("user_email", res.data.user.email);
+            localStorage.setItem("user_name", res.data.user.fullName);
+            setSuccess(`Welcome ${res.data.user.fullName}`);
+            setTimeout(() => {
+                navigate("/");
+            }, 1500);
+        } catch (err) {
+            setError(err.response?.data?.message || "Login failed");
+        }
+    };
+
+    return (
+        <Container component="main" maxWidth="xs">
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    minHeight: '80vh'
+                }}
+            >
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <Card elevation={5} sx={{ borderRadius: 3, width: '100%', minWidth: 340 }}>
+                        <CardContent sx={{ p: 4 }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
+                                <motion.div
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                >
+                                    <LockOutlined sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
+                                </motion.div>
+                                <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }}>
+                                    Login
+                                </Typography>
+                            </Box>
+
+                            {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+                            {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
+
+                            <form onSubmit={handleSubmit}>
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    sx={{ mb: 2 }}
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    sx={{ mb: 2 }}
+                                />
+                                <FormControl fullWidth sx={{ mb: 2 }}>
+                                    <InputLabel id="role-label">Role</InputLabel>
+                                    <Select
+                                        labelId="role-label"
+                                        id="role"
+                                        name="role"
+                                        value={formData.role}
+                                        onChange={handleChange}
+                                        label="Role"
+                                    >
+                                        <MenuItem value="" disabled>Select role</MenuItem>
+                                        <MenuItem value="worker">Worker</MenuItem>
+                                        <MenuItem value="client">Client</MenuItem>
+                                        <MenuItem value="admin">Admin</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        sx={{
+                                            mt: 2,
+                                            mb: 2,
+                                            py: 1.5,
+                                            borderRadius: 2,
+                                            fontWeight: 'bold'
+                                        }}
+                                    >
+                                        Login
+                                    </Button>
+                                </motion.div>
+                            </form>
+                            <Typography variant="body2" color="text.secondary" align="center">
+                                Don't have an account?{' '}
+                                <Typography
+                                    component="a"
+                                    href="/signup"
+                                    variant="body2"
+                                    sx={{
+                                        color: 'primary.main',
+                                        textDecoration: 'none',
+                                        '&:hover': {
+                                            textDecoration: 'underline'
+                                        }
+                                    }}
+                                >
+                                    Sign Up
+                                </Typography>
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </motion.div>
+            </Box>
+        </Container>
+    );
+}
+
+export default Login;
