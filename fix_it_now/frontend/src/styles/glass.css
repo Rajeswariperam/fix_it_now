@@ -1,0 +1,151 @@
+/* Glass Morphism Styles */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07) !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.1);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 12px 20px !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.glass-input:focus {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(31, 38, 135, 0.1);
+}
+
+.gradient-btn {
+  background: linear-gradient(45deg, #2ecc71, #27ae60) !important;
+  border: none !important;
+  border-radius: 30px !important;
+  padding: 12px 40px !important;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.gradient-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4) !important;
+}
+
+.glass-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent) !important;
+  padding: 2rem 1rem 1rem !important;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.slide-in {
+  animation: slideIn 0.6s ease-out forwards;
+}
+
+/* Override root styles for full-width layout */
+#root {
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+/* Responsive background gradients */
+body {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+/* Enhance form controls */
+.form-control-lg, .form-select-lg {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 12px 20px !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.form-control-lg:focus, .form-select-lg:focus {
+  box-shadow: 0 0 0 0.25rem rgba(46, 204, 113, 0.25) !important;
+  border-color: rgba(46, 204, 113, 0.5) !important;
+}
+
+/* Card animations */
+.card-hover-effect {
+  transition: all 0.3s ease-in-out;
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.1);
+}
+
+/* Button animations */
+.btn-hover-effect {
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-hover-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+}
+
+/* Image hover effects */
+.img-hover-effect {
+  transition: all 0.5s ease-in-out;
+}
+
+.img-hover-effect:hover {
+  transform: scale(1.05);
+}
+
+/* Loading animations */
+.loading-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
